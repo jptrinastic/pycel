@@ -207,7 +207,7 @@ class Cell(object):
             r = excel.get_range(range)
             fs = r.Formula
             vs = r.Value
-            print fs, vs
+            print(fs, vs)
             
             for it in (list(izip(*x)) for x in izip(ads,fs,vs)):
                 row = []
@@ -571,7 +571,7 @@ def criteria_parser(criteria):
                 return x > value
         elif operator == '>=':
             def check(x):
-                print '\n TEST', x
+                print('\n TEST', x)
                 if not is_number(x):
                     raise TypeError('excellib.countif() doesnt\'t work for checking non number items against non equality')
                 return x >= value
