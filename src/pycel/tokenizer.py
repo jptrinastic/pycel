@@ -554,7 +554,7 @@ class ExcelParser(ExcelParserTokens):
         output = ""
         if self.tokens:
             for t in self.tokens.items:
-                #print "'",t.ttype,t.tsubtype,t.tvalue,"'"
+                #print("'",t.ttype,t.tsubtype,t.tvalue,"'")
                 if (t.tsubtype == self.TOK_SUBTYPE_STOP):
                     indent -= 1
     
@@ -638,7 +638,7 @@ def shunting_yard(expression):
         else:
             tokens.append(t)
 
-    print "tokens: ", "|".join([x.tvalue for x in tokens])
+    print("tokens: ", "|".join([x.tvalue for x in tokens]))
 
     #http://office.microsoft.com/en-us/excel-help/calculation-operators-and-precedence-HP010078886.aspx
     operators = {}
@@ -666,9 +666,9 @@ def shunting_yard(expression):
     arg_count = []
     
     def po():
-        print "output: ", "|".join([x.tvalue for x in output])
+        print("output: ", "|".join([x.tvalue for x in output]))
     def so():
-        print "stack:", "|".join([x.tvalue for x in stack])
+        print("stack:", "|".join([x.tvalue for x in stack]))
     
     for t in tokens:
         if t.ttype == "operand":
@@ -741,7 +741,7 @@ def shunting_yard(expression):
                 w = were_values.pop()
                 if w: a += 1
                 f.num_args = a
-                print f, "has ",a," args"
+                print(f, "has ",a," args")
                 output.append(f)
 
     while stack:
@@ -750,6 +750,6 @@ def shunting_yard(expression):
         
         output.append(create_node(stack.pop()))
 
-    #print "Stack is: ", "|".join(stack)
-    #print "Ouput is: ", "|".join([x.tvalue for x in output])
+    #print("Stack is: ", "|".join(stack))
+    #print("Ouput is: ", "|".join([x.tvalue for x in output]))
     return output
