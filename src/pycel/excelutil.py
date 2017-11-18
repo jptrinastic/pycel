@@ -1,5 +1,5 @@
 from __future__ import division
-from itertools import izip
+#from itertools import izip #deprecated in Python 3.x
 import collections
 import functools
 import re
@@ -209,7 +209,7 @@ class Cell(object):
             vs = r.Value
             print(fs, vs)
             
-            for it in (list(izip(*x)) for x in izip(ads,fs,vs)):
+            for it in (list(zip(*x)) for x in zip(ads,fs,vs)):
                 row = []
                 for c in it:
                     a = c[0]
