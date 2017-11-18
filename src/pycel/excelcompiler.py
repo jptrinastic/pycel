@@ -6,7 +6,7 @@ try:
     import pythoncom
     from pycel.excelwrapper import ExcelComWrapper as ExcelWrapperImpl
 except:
-    print "Can\'t import win32com -> switch from Com to Openpyxl wrapping implementation"
+    print("Can\'t import win32com -> switch from Com to Openpyxl wrapping implementation")
     from pycel.excelwrapper import ExcelOpxWrapper as ExcelWrapperImpl
 
 import excellib
@@ -76,13 +76,13 @@ class Spreadsheet(object):
         
     def reset(self, cell):
         if cell.value is None: return
-        #print "resetting", cell.address()
+        #print("resetting", cell.address())
         cell.value = None
         map(self.reset,self.G.successors_iter(cell)) 
 
     def print_value_tree(self,addr,indent):
         cell = self.cellmap[addr]
-        print "%s %s = %s" % (" "*indent,addr,cell.value)
+        print("%s %s = %s" % (" "*indent,addr,cell.value))
         for c in self.G.predecessors_iter(cell):
             self.print_value_tree(c.address(), indent+1)
 
@@ -120,7 +120,7 @@ class Spreadsheet(object):
             
         # no formula, fixed value
         if not cell.formula or cell.value != None:
-            #print "  returning constant or cached value for ", cell.address()
+            #print("  returning constant or cached value for ", cell.address())
             return cell.value
         
         # recalculate formula
@@ -132,11 +132,11 @@ class Spreadsheet(object):
             return self.evaluate_range(rng)
                 
         try:
-            print "Evalling: %s, %s" % (cell.address(),cell.python_expression)
+            print("Evalling: %s, %s" % (cell.address(),cell.python_expression))
             vv = eval(cell.compiled_expression)
-            #print "Cell %s evalled to %s" % (cell.address(),vv)
+            #print("Cell %s evalled to %s" % (cell.address(),vv))
             if vv is None:
-                print "WARNING %s is None" % (cell.address())
+                print("WARNING %s is None" % (cell.address()))
             cell.value = vv
         except Exception as e:
             if e.message.startswith("Problem evalling"):
@@ -392,7 +392,7 @@ def shunting_yard(expression):
         else:
             tokens.append(t)
 
-    #print "tokens: ", "|".join([x.tvalue for x in tokens])
+    #print("tokens: ", "|".join([x.tvalue for x in tokens]))
 
     #http://office.microsoft.com/en-us/excel-help/calculation-operators-and-precedence-HP010078886.aspx
     operators = {}
@@ -490,7 +490,7 @@ def shunting_yard(expression):
                 w = were_values.pop()
                 if w: a += 1
                 f.num_args = a
-                #print f, "has ",a," args"
+                #print(f, "has ",a," args")
                 output.append(f)
 
     while stack:
@@ -499,8 +499,8 @@ def shunting_yard(expression):
         
         output.append(create_node(stack.pop()))
 
-    #print "Stack is: ", "|".join(stack)
-    #print "Ouput is: ", "|".join([x.tvalue for x in output])
+    #print("Stack is: ", "|".join(stack))
+    #print("Ouput is: ", "|".join([x.tvalue for x in output]))
     
     # convert to list
     result = [x for x in output]
@@ -606,17 +606,17 @@ class ExcelCompiler(object):
         seeds, nr, nc = Cell.make_cells(self.excel, seed, sheet=cursheet) # no need to output nr and nc here, since seed can be a list of unlinked cells
         seeds = list(flatten(seeds))
         
-        print "Seed %s expanded into %s cells" % (seed,len(seeds))
+        print("Seed %s expanded into %s cells" % (seed,len(seeds)))
         
         # only keep seeds with formulas or numbers
         seeds = [s for s in seeds if s.formula or isinstance(s.value,(int,float))]
 
-        print "%s filtered seeds " % len(seeds)
+        print("%s filtered seeds " % len(seeds))
         
         # cells to analyze: only formulas
         todo = [s for s in seeds if s.formula]
 
-        print "%s cells on the todo list" % len(todo)
+        print("%s cells on the todo list" % len(todo))
 
         # map of all cells
         cellmap = dict([(x.address(),x) for x in seeds])
@@ -630,7 +630,7 @@ class ExcelCompiler(object):
         while todo:
             c1 = todo.pop()
             
-            print "Handling ", c1.address()
+            print("Handling ", c1.address())
             
             # set the current sheet so relative addresses resolve properly
             if c1.sheet != cursheet:
@@ -691,13 +691,13 @@ class ExcelCompiler(object):
                         if c2.formula:
                             # cell with a formula, needs to be added to the todo list
                             todo.append(c2)
-                            #print "appended ", c2.address()
+                            #print("appended ", c2.address())
                         else:
                             # constant cell, no need for further processing, just remember to set the code
                             pystr,ast = self.cell2code(c2)
                             c2.python_expression = pystr
                             c2.compile()     
-                            #print "skipped ", c2.address()
+                            #print("skipped ", c2.address())
                         
                         # save in the cellmap
                         cellmap[c2.address()] = c2
@@ -707,7 +707,7 @@ class ExcelCompiler(object):
                     # add an edge from the cell to the parent (range or cell)
                     G.add_edge(cellmap[c2.address()],target)
             
-        print "Graph construction done, %s nodes, %s edges, %s cellmap entries" % (len(G.nodes()),len(G.edges()),len(cellmap))
+        print("Graph construction done, %s nodes, %s edges, %s cellmap entries" % (len(G.nodes()),len(G.edges()),len(cellmap)))
 
         sp = Spreadsheet(G,cellmap)
         
@@ -763,13 +763,13 @@ if __name__ == '__main__':
               ]
 
     for i in inputs:
-        print "**************************************************"
-        print "Formula: ", i
+        print("**************************************************")
+        print("Formula: ", i)
 
         e = shunting_yard(i);
-        print "RPN: ",  "|".join([str(x) for x in e])
+        print("RPN: ",  "|".join([str(x) for x in e]))
         
         G,root = build_ast(e)
         
-        print "Python code: ", root.emit(G,context=None)
-        print "**************************************************"
+        print("Python code: ", root.emit(G,context=None))
+        print("**************************************************")
