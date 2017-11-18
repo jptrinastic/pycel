@@ -9,7 +9,7 @@ except:
     print("Can\'t import win32com -> switch from Com to Openpyxl wrapping implementation")
     from pycel.excelwrapper import ExcelOpxWrapper as ExcelWrapperImpl
 
-import excellib
+from pycel import excellib
 from excellib import *
 from excelutil import *
 from math import *
@@ -17,7 +17,8 @@ from networkx.classes.digraph import DiGraph
 from networkx.drawing.nx_pydot import write_dot
 from networkx.drawing.nx_pylab import draw, draw_circular
 from networkx.readwrite.gexf import write_gexf
-from tokenizer import ExcelParser, f_token, shunting_yard
+from pycel import tokenizer
+from pycel.tokenizer import ExcelParser, f_token, shunting_yard
 import cPickle
 import logging
 import networkx as nx
