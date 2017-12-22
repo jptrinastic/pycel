@@ -18,7 +18,9 @@ from os import path
 import abc
 from abc import abstractproperty, abstractmethod
 
-class ExcelWrapper(object, metaclass=abc.ABCMeta):
+class ExcelWrapper(object):
+    __metaclass__ = abc.ABCMeta
+    
     @abstractproperty
     def rangednames(self):
         return
@@ -91,7 +93,7 @@ class ExcelWrapper(object, metaclass=abc.ABCMeta):
     def get_formula_from_range(self,range):
         f = self.get_range(range).Formula
         if isinstance(f, (list,tuple)):
-            if any([x for x in f if x[0].startswith("=")]):
+            if any(filter(lambda x: x[0].startswith("="),f)):
                 return [x[0] for x in f];
             else:
                 return None
