@@ -34,19 +34,30 @@ from pycel.excelutil import (
 # Note: some functions (if, pi, atan2, and, or, array, ...) are already taken care of
 # in the FunctionNode code, so adding them here will have no effect.
 FUNCTION_MAP = {
-      "ln":"xlog",
-      "min":"xmin",
-      "min":"xmin",
-      "max":"xmax",
-      "sum":"xsum",
-      "gammaln":"lgamma",
-      "round": "xround",
-      "ceiling": "xceil"
+      "ln" : "xlog",
+      "min" : "xmin",
+      "min" : "xmin",
+      "max" : "xmax",
+      "sum" : "xsum",
+      "gammaln" : "lgamma",
+      "round" : "xround",
+      "ceiling" : "xceil",
+      "mina": "xmina",
       }
 
 ######################################################################################
 # List of excel equivalent functions
 # TODO: needs unit testing
+
+def xmina(*args):
+    # ignore non numeric cells
+    data = [x for x in flatten(args) if isinstance(x,(int,float))]
+    
+    # however, if no non numeric cells, return zero (is what excel does)
+    if len(data) < 1:
+        return 0
+    else:
+        return min(data)
 
 def xceil(x, s):
     # return ceiling using multiple s for input x
