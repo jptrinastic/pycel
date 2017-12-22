@@ -506,7 +506,7 @@ class ExcelParser(ExcelParserTokens):
             if ((token.ttype == self.TOK_TYPE_OPERAND) and (len(token.tsubtype) == 0)):
                 try:
                     float(token.tvalue)
-                except ValueError, e:
+                except ValueError as e:
                     if ((token.tvalue == 'TRUE') or (token.tvalue == 'FALSE')):
                         token.tsubtype = self.TOK_SUBTYPE_LOGICAL
                     else:
