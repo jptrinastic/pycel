@@ -42,12 +42,18 @@ FUNCTION_MAP = {
       "gammaln" : "lgamma",
       "round" : "xround",
       "ceiling" : "xceil",
-      "mina": "xmina",
+      "mina" : "xmina",
+      "mech" : "xmech", 
       }
 
 ######################################################################################
 # List of excel equivalent functions
 # TODO: needs unit testing
+
+#---------------MACRO INPUTS-----------------#
+def xmech():
+    # Returns value based on Indices tab
+    return 0.0005
 
 def xmina(*args):
     # ignore non numeric cells
