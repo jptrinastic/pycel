@@ -78,12 +78,12 @@ class Spreadsheet(object):
         if cell.value is None: return
         #print "resetting", cell.address()
         cell.value = None
-        list(map(self.reset,self.G.successors_iter(cell))) 
+        list(map(self.reset,self.G.successors(cell))) 
 
     def print_value_tree(self,addr,indent):
         cell = self.cellmap[addr]
         print("%s %s = %s" % (" "*indent,addr,cell.value))
-        for c in self.G.predecessors_iter(cell):
+        for c in self.G.predecessors(cell):
             self.print_value_tree(c.address(), indent+1)
 
     def recalculate(self):
