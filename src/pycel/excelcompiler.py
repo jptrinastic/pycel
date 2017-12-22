@@ -577,7 +577,6 @@ class ExcelCompiler(object):
         """Generate python code for the given cell"""
         if cell.formula:
             e = shunting_yard(cell.formula or str(cell.value))
-            print(e)
             ast,root = build_ast(e)
             code = root.emit(ast,context=Context(cell,self.excel))
         else:
