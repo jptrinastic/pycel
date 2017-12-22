@@ -521,25 +521,25 @@ def build_ast(expression):
             if n.ttype == "operator-infix":
                 arg2 = stack.pop()
                 arg1 = stack.pop()
-                G.add_node(arg1,{'pos':1})
-                G.add_node(arg2,{'pos':2})
+                G.add_node(arg1,pos=1)
+                G.add_node(arg2,pos=2)
                 G.add_edge(arg1, n)
                 G.add_edge(arg2, n)
             else:
                 arg1 = stack.pop()
-                G.add_node(arg1,{'pos':1})
+                G.add_node(arg1,pos=1)
                 G.add_edge(arg1, n)
                 
         elif isinstance(n,FunctionNode):
             args = [stack.pop() for _ in range(n.num_args)]
             args.reverse()
             for i,a in enumerate(args):
-                G.add_node(a,{'pos':i})
+                G.add_node(a,pos=i)
                 G.add_edge(a,n)
             #for i in range(n.num_args):
             #    G.add_edge(stack.pop(),n)
         else:
-            G.add_node(n,{'pos':0})
+            G.add_node(n,pos=0)
 
         stack.append(n)
         
