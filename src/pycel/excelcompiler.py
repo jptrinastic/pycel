@@ -582,7 +582,7 @@ class ExcelCompiler(object):
             code = root.emit(ast,context=Context(cell,self.excel))
         else:
             ast = None
-            code = str('"' + cell.value + '"' if isinstance(cell.value,str) else cell.value)
+            code = str('"' + cell.value + '"' if isinstance(cell.value,bytes) else cell.value)
             
         return code,ast
 
