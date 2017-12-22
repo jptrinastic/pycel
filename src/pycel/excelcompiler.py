@@ -515,7 +515,6 @@ def build_ast(expression):
     stack = []
     
     for n in expression:
-        print(n)
         # Since the graph does not maintain the order of adding nodes/edges
         # add an extra attribute 'pos' so we can always sort to the correct order
         if isinstance(n,OperatorNode):
@@ -578,6 +577,7 @@ class ExcelCompiler(object):
         """Generate python code for the given cell"""
         if cell.formula:
             e = shunting_yard(cell.formula or str(cell.value))
+            print(e)
             ast,root = build_ast(e)
             code = root.emit(ast,context=Context(cell,self.excel))
         else:
