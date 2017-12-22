@@ -165,7 +165,7 @@ class ASTNode(object):
 
     def parent(self,ast):
         args = ast.successors(self)
-        return list(args)[0] if args else None
+        return list(args) if args else None
     
     def emit(self,ast,context=None):
         """Emit code"""
