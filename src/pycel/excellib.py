@@ -106,7 +106,7 @@ def sumif(range, criteria, sum_range = []): # Excel reference: https://support.o
     if type(sum_range) != list:
         raise TypeError('%s must be a list' % str(sum_range))
 
-    if isinstance(criteria, list) and not isinstance(criteria , (str, bool)): # ugly... 
+    if isinstance(criteria, list) and not isinstance(criteria , (bytes, bool)): # ugly... 
         return 0
 
     indexes = find_corresponding_index(range, criteria)
@@ -128,7 +128,7 @@ def average(*args):
 
 def right(text,n):
     #TODO: hack to deal with naca section numbers
-    if isinstance(text, unicode) or isinstance(text,str):
+    if isinstance(text, bytes) or isinstance(text,bytes):
         return text[-n:]
     else:
         # TODO: get rid of the decimal
@@ -190,7 +190,7 @@ def linest(*args, **kwargs):
     
     if len(args) == 3:
         const = args[2]
-        if isinstance(const,str):
+        if isinstance(const,bytes):
             const = (const.lower() == "true")
     else:
         const = True
@@ -219,7 +219,7 @@ def npv(*args):
 def match(lookup_value, lookup_array, match_type=1):
     
     def type_convert(value):
-        if type(value) == str:
+        if type(value) == bytes:
             value = value.lower()
         elif type(value) == int:
             value = float(value)
