@@ -3,6 +3,7 @@ Python equivalents of various excel functions
 '''
 
 import numpy as np
+import math
 from datetime import datetime
 from math import log
 from decimal import Decimal, ROUND_HALF_UP
@@ -39,12 +40,17 @@ FUNCTION_MAP = {
       "max":"xmax",
       "sum":"xsum",
       "gammaln":"lgamma",
-      "round": "xround"
+      "round": "xround",
+      "ceiling": "ceil"
       }
 
 ######################################################################################
 # List of excel equivalent functions
 # TODO: needs unit testing
+
+def ceil(x, s):
+    # return ceiling using multiple s for input x
+    return s * math.ceil(x/s)    
 
 def value(text):
     # make the distinction for naca numbers
