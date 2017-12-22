@@ -41,14 +41,14 @@ FUNCTION_MAP = {
       "sum":"xsum",
       "gammaln":"lgamma",
       "round": "xround",
-      "ceiling": "ceil"
+      "ceiling": "xceil"
       }
 
 ######################################################################################
 # List of excel equivalent functions
 # TODO: needs unit testing
 
-def ceil(x, s):
+def xceil(x, s):
     # return ceiling using multiple s for input x
     return s * math.ceil(x/s)    
 
